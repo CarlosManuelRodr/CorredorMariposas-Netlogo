@@ -1,18 +1,20 @@
 globals
 [
-  final-corridor-width
+  ; q                      Probabilidad de que la mariposa realice un movimiento aleatorio.
+  ; realistic-enviroment?  Opción para generar alturas basadas en datos reales.
+  final-corridor-width ;   Variable que reporta sólo el valor final de anchura de corredor.
 ]
 patches-own
 [
-  elevation
-  used?
+  elevation ; El terreno se describe completamente por la propiedad de altura.
+  used?     ; Variable que llenan las tortugas al pasar y que es usada en la medición de anchura de corredor.
 ]
 turtles-own
 [
-  start-patch
+  start-patch ; Posición inicial de la tortuga
 ]
 
-to create-simple-enviroment
+to create-simple-enviroment ; Crea dos montañas "suaves", sin ruido.
   ask patches
   [
     let elev1 100 - distancexy 30 30
@@ -27,7 +29,7 @@ to create-simple-enviroment
   ]
 end
 
-to create-realistic-enviroment
+to create-realistic-enviroment ; Genera alturas según archivo con datos.
   file-open "ElevationData.txt"
   while [not file-at-end?]
   [
@@ -93,8 +95,8 @@ to go
 end
 
 to-report corridor-width
-  let visited-patches count patches with [used? = true]
-  let mean-distance mean [distance start-patch] of turtles
+  let visited-patches count patches with [used? = true]    ; Conteo de patches totales visitados por tortugas.
+  let mean-distance mean [distance start-patch] of turtles ; Conteo de distancia promedio recorrida.
   ifelse mean-distance != 0
   [ report visited-patches / mean-distance ]
   [ report 0 ]
