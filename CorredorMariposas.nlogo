@@ -29,7 +29,9 @@ to setup
   crt 50
   [
     set size 2
-    setxy 85 95
+    let randx random-normal 0 1
+    let randy random-normal 0 1
+    setxy 85 + randx 95 + randy
     pen-down
   ]
 
@@ -118,7 +120,7 @@ q
 q
 0
 1
-0.4
+0.45
 0.05
 1
 NIL
