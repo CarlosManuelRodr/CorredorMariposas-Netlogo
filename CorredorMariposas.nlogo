@@ -4,7 +4,7 @@ globals
 ]
 patches-own
 [
-
+  elevation
 ]
 turtles-own
 [
@@ -13,7 +13,17 @@ turtles-own
 
 to setup
   ca
+  ask patches
+  [
+    let elev1 100 - distancexy 30 30
+    let elev2 50 - distancexy 120 100
 
+    ifelse elev1 > elev2
+    [ set elevation elev1 ]
+    [ set elevation elev2 ]
+
+    set pcolor scale-color green elevation 0 100
+  ]
   reset-ticks
 end
 
