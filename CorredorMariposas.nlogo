@@ -48,6 +48,7 @@ to create-realistic-enviroment
     set pcolor scale-color green elevation elevMin elevMax
     set used? false
   ]
+  file-close
 end
 
 to setup
