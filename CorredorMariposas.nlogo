@@ -1,18 +1,20 @@
 globals
 [
-
+  final-corridor-width
 ]
 patches-own
 [
   elevation
+  used?
 ]
 turtles-own
 [
-
+  start-patch
 ]
 
 to setup
   ca
+  set final-corridor-width 0
 
   ask patches
   [
@@ -24,11 +26,13 @@ to setup
     [ set elevation elev2 ]
 
     set pcolor scale-color green elevation 0 100
+    set used? false
   ]
 
   crt 50
   [
     set size 2
+    set start-patch patch-here
     let randx random-normal 0 1
     let randy random-normal 0 1
     setxy 85 + randx 95 + randy
@@ -42,12 +46,26 @@ to move
   ifelse random-float 1 < q
   [ uphill elevation ]
   [ move-to one-of neighbors ]
+
+  set used? true
 end
 
 to go
   ask turtles [move]
   tick
-  if ticks >= 1000 [stop]
+  if ticks >= 1000
+  [
+    set final-corridor-width corridor-width
+    stop
+  ]
+end
+
+to-report corridor-width
+  let visited-patches count patches with [used? = true]
+  let mean-distance mean [distance start-patch] of turtles
+  ifelse mean-distance != 0
+  [ report visited-patches / mean-distance ]
+  [ report 0 ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -125,6 +143,17 @@ q
 1
 NIL
 HORIZONTAL
+
+MONITOR
+70
+165
+187
+210
+NIL
+final-corridor-width
+17
+1
+11
 
 @#$#@#$#@
 # Butterfly Model ODD Description
