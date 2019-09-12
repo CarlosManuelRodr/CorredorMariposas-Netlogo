@@ -1,6 +1,6 @@
 globals
 [
-
+  q
 ]
 patches-own
 [
@@ -13,6 +13,8 @@ turtles-own
 
 to setup
   ca
+  set q 0.4
+
   ask patches
   [
     let elev1 100 - distancexy 30 30
@@ -29,13 +31,22 @@ to setup
   [
     set size 2
     setxy 85 95
+    pen-down
   ]
 
   reset-ticks
 end
 
-to go
+to move
+  ifelse random-float 1 < q
+  [ uphill elevation ]
+  [ move-to one-of neighbors ]
+end
 
+to go
+  ask turtles [move]
+  tick
+  if ticks >= 1000 [stop]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
