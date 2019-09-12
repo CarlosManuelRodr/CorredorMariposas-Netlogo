@@ -12,10 +12,7 @@ turtles-own
   start-patch
 ]
 
-to setup
-  ca
-  set final-corridor-width 0
-
+to create-simple-enviroment
   ask patches
   [
     let elev1 100 - distancexy 30 30
@@ -28,6 +25,38 @@ to setup
     set pcolor scale-color green elevation 0 100
     set used? false
   ]
+end
+
+to create-realistic-enviroment
+  file-open "ElevationData.txt"
+  while [not file-at-end?]
+  [
+    let next-x file-read
+    let next-y file-read
+    let next-elevation file-read
+    ask patch next-x next-y
+    [
+     set elevation next-elevation
+    ]
+  ]
+
+  let elevMin min [elevation] of patches
+  let elevMax max [elevation] of patches
+
+  ask patches
+  [
+    set pcolor scale-color green elevation elevMin elevMax
+    set used? false
+  ]
+end
+
+to setup
+  ca
+  set final-corridor-width 0
+
+  ifelse realistic-enviroment?
+  [ create-realistic-enviroment ]
+  [ create-simple-enviroment ]
 
   crt 50
   [
@@ -98,10 +127,10 @@ ticks
 30.0
 
 BUTTON
-57
-63
-130
-96
+55
+15
+128
+48
 NIL
 setup
 NIL
@@ -115,10 +144,10 @@ NIL
 1
 
 BUTTON
-135
-63
-198
-96
+133
+15
+196
+48
 NIL
 go
 T
@@ -140,7 +169,7 @@ q
 q
 0
 1
-0.45
+0.3
 0.05
 1
 NIL
@@ -174,6 +203,17 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" ""
+
+SWITCH
+45
+70
+212
+103
+realistic-enviroment?
+realistic-enviroment?
+0
+1
+-1000
 
 @#$#@#$#@
 # Butterfly Model ODD Description
