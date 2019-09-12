@@ -1,6 +1,6 @@
 globals
 [
-  q
+
 ]
 patches-own
 [
@@ -13,7 +13,6 @@ turtles-own
 
 to setup
   ca
-  set q 0.4
 
   ask patches
   [
@@ -109,6 +108,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+40
+120
+212
+153
+q
+q
+0
+1
+0.4
+0.05
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 # Butterfly Model ODD Description
