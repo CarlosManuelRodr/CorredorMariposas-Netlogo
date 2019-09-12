@@ -52,12 +52,14 @@ end
 
 to go
   ask turtles [move]
-  tick
+  plot corridor-width
+
   if ticks >= 1000
   [
     set final-corridor-width corridor-width
     stop
   ]
+  tick
 end
 
 to-report corridor-width
@@ -154,6 +156,24 @@ final-corridor-width
 17
 1
 11
+
+PLOT
+30
+225
+230
+375
+Corridor width
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" ""
 
 @#$#@#$#@
 # Butterfly Model ODD Description
