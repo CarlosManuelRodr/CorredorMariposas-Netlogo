@@ -54,20 +54,21 @@ to create-realistic-enviroment ; Genera alturas según archivo con datos.
 end
 
 to setup
-  ca
+  clear-all
   set final-corridor-width 0
 
   ifelse realistic-enviroment?
   [ create-realistic-enviroment ]
   [ create-simple-enviroment ]
 
-  crt 50
+  create-turtles 50
   [
     set size 2
     set start-patch patch-here
     let randx random-normal 0 1
     let randy random-normal 0 1
     setxy 85 + randx 95 + randy
+    set label elevation
     pen-down
   ]
 
@@ -80,6 +81,7 @@ to move
   [ move-to one-of neighbors ]
 
   set used? true
+  set label elevation
 end
 
 to go
